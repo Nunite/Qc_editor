@@ -1,21 +1,37 @@
-import tkinter as tk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
-def myfunction1():
-    print("Hello World")
-    #更改button0的颜色
-    button0.config(text='already clicked')
+def b1_click():
+    print("Button 1 clicked")
+def b2_click():
+    print("Button 2 clicked")
 
-def myfunction2():
-    print("Goodbye World")
 
-window = tk.Tk()
-window.title("My First GUI")
-window.geometry("900x800")
+root = ttk.Window(themename='darkly')
+root.geometry("400x200")
+ovalues = ['选项1', '选项2']
+menubox = ttk.OptionMenu(root, ttk.StringVar(), ovalues[0], *ovalues)
+menubox.pack(padx=10, pady=10)
+menubox.pack(padx=10,pady=10)
 
-# 创建第一个按钮
-button0 = tk.Button(window, text='1: 根据标记内容生成', fg='red',command=myfunction1)
-button1 = tk.Button(window, text='2: 根据手动输入生成', command=myfunction2)
-button0.pack(pady=10) 
-# 创建第二个按钮
-button1.pack(pady=10)
-window.mainloop()
+
+b1 = ttk.Button(root, text="Submit", bootstyle="warning",command=b1_click)
+b1.pack(padx=5, pady=10)
+b2 = ttk.Button(root, text="Submit", bootstyle="danger-link",command=b2_click)
+b2.pack(padx=5, pady=10)
+combox = ttk.Combobox(root,state='readonly',style='danger')
+values = [f'qc{i+1}' for i in range(10)]
+combox['values']= values
+combox.current(0)
+combox.pack(padx=5,pady=10)
+# 定义回调函数
+def on_combobox_change(*args):
+    current_value = combox['values'][combox.current()]
+    print(f'当前combox值为: {current_value}')
+
+# 监听 current 属性的变化
+combox.bind('<<ComboboxSelected>>', on_combobox_change)
+
+
+
+root.mainloop()
