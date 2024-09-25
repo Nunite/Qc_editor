@@ -95,8 +95,6 @@ def Creatwindow():
     # 设置初始的文本内容
     text.insert(ttk.END, "这是初始的文本内容\n")
 
-
-
     root.mainloop()
 
 # 调用 Creatwindow 函数
