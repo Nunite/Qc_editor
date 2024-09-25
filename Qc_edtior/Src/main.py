@@ -5,8 +5,10 @@ class CreatMethod:
     def __init__(self,root):
         self.root = root
 
-    def Notice(self,test):
-        print("Notice method called"+test)
+    def Notice(self,text):
+        print("Notice method called")
+        text.delete("1.0",ttk.END)
+        text.insert(ttk.END,"Notice method called")
     
     def Modlelname(self):
         print("Modlelname method called")
@@ -59,19 +61,44 @@ class CreatMethod:
     def Sequence(self):
         print("Sequence method called")
 
-def Creatwindow(root):
-    root.geometry('500x400')
-    
+
+def Creatwindow():
+    root = ttk.Window(themename="darkly")
+    root_length = "400"
+    root_width = "200"
+    putscreen_height = (root.winfo_screenheight()-int(root_length))//2
+    putscreen_width = (root.winfo_screenwidth()-int(root_width))//2
+    root.geometry(f"{root_length}x{root_width}+{putscreen_width}+{putscreen_height}")
+    root.resizable(False, False)
     # 示例：添加一个标签
     label = ttk.Label(root, text="Hello, TtkBootstrap!")
     label.pack(pady=20)
     #place button
     creat_method = CreatMethod(root)
-    Noticebutton = ttk.Button(root,text="Notice",command=lambda:creat_method.Notice("Again hello word"))
-    Noticebutton.pack(pady=20)
+    Noticebutton = ttk.Button(root,text="Notice",command=lambda:creat_method.Notice(text))
+    Noticebutton.pack(pady=10)
+    # 创建一个Frame小部件，用于放置Text和Scrollbar
+    frame = ttk.Frame(root)
+    frame.pack()
+
+    # 创建一个Scrollbar小部件
+    scrollbar = ttk.Scrollbar(frame)
+    scrollbar.pack(side=ttk.RIGHT, fill=ttk.Y)
+
+    # 创建一个Text小部件，并将其与Scrollbar关联
+    text = ttk.Text(frame, wrap=ttk.WORD, yscrollcommand=scrollbar.set)
+    text.pack(side=ttk.LEFT, fill=ttk.BOTH)
+
+    # 将Scrollbar与Text关联
+    scrollbar.config(command=text.yview)
+
+    # 设置初始的文本内容
+    text.insert(ttk.END, "这是初始的文本内容\n")
+
+
+
     root.mainloop()
 
-# 创建一个实例并调用 Creatwindow 函数
+# 调用 Creatwindow 函数
 if __name__ == "__main__":
-    root = ttk.Window(themename="darkly")
-    Creatwindow(root)
+    Creatwindow()
