@@ -1,37 +1,77 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
-def b1_click():
-    print("Button 1 clicked")
-def b2_click():
-    print("Button 2 clicked")
+class CreatMethod:
+    def __init__(self,root):
+        self.root = root
 
+    def Notice(self,test):
+        print("Notice method called"+test)
+    
+    def Modlelname(self):
+        print("Modlelname method called")
+    
+    def Cd(self):
+        print("Cd method called")
+    
+    def Cdtexture(self):
+        print("Cdtexture method called")
+    
+    def Cliptotextures(self):
+        print("Cliptotextures method called")
+    
+    def Scale(self):
+        print("Scale method called")
+    
+    def Texrendermode(self):
+        print("Texrendermode method called")
+    
+    def Gamma(self):
+        print("Gamma method called")
+    
+    def Origin(self):
+        print("Origin method called")
+    
+    def Bbbox(self):
+        print("Bbbox method called")
+    
+    def Cbox(self):
+        print("Cbox method called")
+    
+    def Hbox(self):
+        print("Hbox method called")
+    
+    def Eeyposition(self):
+        print("Eeyposition method called")
+    
+    def Body(self):
+        print("Body method called")
+    
+    def Body_group(self):
+        print("Body_group method called")
+    
+    def Flags(self):
+        print("Flags method called")
+    
+    def Texturegroup(self):
+        print("Texturegroup method called")
+    
+    def Sequence(self):
+        print("Sequence method called")
 
-root = ttk.Window(themename='darkly')
-root.geometry("400x200")
-ovalues = ['选项1', '选项2']
-menubox = ttk.OptionMenu(root, ttk.StringVar(), ovalues[0], *ovalues)
-menubox.pack(padx=10, pady=10)
-menubox.pack(padx=10,pady=10)
+def Creatwindow(root):
+    root.geometry('500x400')
+    
+    # 示例：添加一个标签
+    label = ttk.Label(root, text="Hello, TtkBootstrap!")
+    label.pack(pady=20)
+    #place button
+    creat_method = CreatMethod(root)
+    Noticebutton = ttk.Button(root,text="Notice",command=lambda:creat_method.Notice("Again hello word"))
+    Noticebutton.pack(pady=20)
+    root.mainloop()
 
-
-b1 = ttk.Button(root, text="Submit", bootstyle="warning",command=b1_click)
-b1.pack(padx=5, pady=10)
-b2 = ttk.Button(root, text="Submit", bootstyle="danger-link",command=b2_click)
-b2.pack(padx=5, pady=10)
-combox = ttk.Combobox(root,state='readonly',style='danger')
-values = [f'qc{i+1}' for i in range(10)]
-combox['values']= values
-combox.current(0)
-combox.pack(padx=5,pady=10)
-# 定义回调函数
-def on_combobox_change(*args):
-    current_value = combox['values'][combox.current()]
-    print(f'当前combox值为: {current_value}')
-
-# 监听 current 属性的变化
-combox.bind('<<ComboboxSelected>>', on_combobox_change)
-
-
-
-root.mainloop()
+# 创建一个实例并调用 Creatwindow 函数
+if __name__ == "__main__":
+    root = ttk.Window(themename="darkly")
+    Creatwindow(root)
