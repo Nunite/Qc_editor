@@ -6,9 +6,11 @@ class CreatMethod:
         self.root = root
 
     def Notice(self,text):
-        print("Notice method called")
+        print(f"{text.get('1.0','1.end')}")
+        text.config(state="normal")
         text.delete("1.0",ttk.END)
         text.insert(ttk.END,"Notice method called")
+        text.config(state="disabled")
     
     def Modlelname(self):
         print("Modlelname method called")
@@ -71,7 +73,7 @@ def Creatwindow():
     root.geometry(f"{root_length}x{root_width}+{putscreen_width}+{putscreen_height}")
     root.resizable(False, False)
     # 示例：添加一个标签
-    label = ttk.Label(root, text="Hello, TtkBootstrap!")
+    label = ttk.Label(root, text="Hello World!")
     label.pack(pady=20)
     #place button
     creat_method = CreatMethod(root)
@@ -82,7 +84,7 @@ def Creatwindow():
     frame.pack()
 
     # 创建一个Scrollbar小部件
-    scrollbar = ttk.Scrollbar(frame)
+    scrollbar = ttk.Scrollbar(frame,style="danger")
     scrollbar.pack(side=ttk.RIGHT, fill=ttk.Y)
 
     # 创建一个Text小部件，并将其与Scrollbar关联
@@ -94,7 +96,7 @@ def Creatwindow():
 
     # 设置初始的文本内容
     text.insert(ttk.END, "这是初始的文本内容\n")
-
+    text.config(state='disabled')
     root.mainloop()
 
 # 调用 Creatwindow 函数
