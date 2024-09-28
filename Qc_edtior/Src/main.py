@@ -65,19 +65,30 @@ class CreatMethod:
         print("Sequence method called")
 
 class BaseWeight_TextGet:
-    def __init__(self, root, name):
+    def __init__(self, root, name, entry_width=12, font_size=20):
         self.root = root
         self.name = name
         self.TextEntry = None
+        self.drag_and_drop_enabled = False  # 添加拖拽功能开关
+        self.entry_width = entry_width  # 文本框宽度
+        self.font_size = font_size  # 字体大小
 
     def Create(self):
         TextFrame = ttk.Frame(self.root)
         TextFrame.pack(side=ttk.TOP)
-        TextLable = ttk.Label(TextFrame, text=f"{self.name}:")
+
+        # 标签
+        TextLable = ttk.Label(TextFrame, text=f"{self.name}:",font=("Arial", self.font_size))
         TextLable.pack(side=ttk.LEFT)
-        self.TextEntry = ttk.Entry(TextFrame)
-        self.TextEntry.insert(ttk.END, "Start Content")
+
+        # 设置文本框宽度和字体大小
+        self.TextEntry = ttk.Entry(TextFrame, width=self.entry_width, font=("Arial", self.font_size))
         self.TextEntry.pack(side=ttk.LEFT)
+
+        # 根据拖拽功能开关来决定是否绑定拖拽事件
+        if self.drag_and_drop_enabled:
+            self.TextEntry.drop_target_register(DND_FILES)
+            self.TextEntry.dnd_bind('<<Drop>>', self.on_drop)
 
     def Get(self):
         print(self.TextEntry.get())
@@ -87,10 +98,16 @@ class BaseWeight_TextGet:
         self.TextEntry.delete(0, ttk.END)
         self.TextEntry.insert(0, text)
 
+    def on_drop(self, event):
+        # 获取拖放的文件路径并设置到文本框中
+        file_path = event.data.strip('{}')  # 去除路径中的大括号
+        self.SetText(file_path)
+        print(f"File dropped: {file_path}")
 
 def Creatwindow():
     # 使用 TkinterDnD 初始化窗口以支持拖拽
     root = TkinterDnD.Tk()  # 使用 ttkbootstrap 创建窗口
+    root.title("Qcreator")
     ttk.Style("darkly")
     root_length = "800"
     root_width = "600"
@@ -102,23 +119,11 @@ def Creatwindow():
     # 创建 BaseWeight_TextGet 输入框
     modelname = BaseWeight_TextGet(root, "modelname")
     modelname.Create()
+    modelname.drag_and_drop_enabled = True
 
-    # 添加按钮，用于测试获取输入框内容
-    testbutton = ttk.Button(root, text="TestButton", command=lambda: modelname.Get())
-    testbutton.pack(pady=10)
-
-    # 将拖放功能绑定到文本框
-    def on_drop(event):
-        # 获取拖放的文件路径并设置到文本框中
-        file_path = event.data.strip('{}')  # 去除路径中的大括号
-        modelname.SetText(file_path)
-        print(f"File dropped: {file_path}")
-
-    # 绑定拖拽事件到输入框
-    modelname.TextEntry.drop_target_register(DND_FILES)
-    modelname.TextEntry.dnd_bind('<<Drop>>', on_drop)
 
     root.mainloop()
+
 
 
 # 调用 Creatwindow 函数
